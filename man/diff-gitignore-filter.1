@@ -1,0 +1,168 @@
+.TH DIFF-GITIGNORE-FILTER 1 "2025-01-03" "diff-gitignore-filter" "User Commands"
+.SH NAME
+diff-gitignore-filter \- stream filter for Git diffs that respects .gitignore patterns
+.SH SYNOPSIS
+.B diff-gitignore-filter
+[\fIOPTIONS\fR]
+.br
+.B git diff --no-pager | diff-gitignore-filter
+[\fIOPTIONS\fR]
+.SH DESCRIPTION
+.B diff-gitignore-filter
+is a pure stream filter for Git diffs that respects .gitignore patterns and can be configured as Git's external diff tool. It processes Git diff output through stdin and filters out changes to files that match patterns in .gitignore files, providing a clean view of relevant changes.
+
+The tool operates as a stream processor with constant memory usage, making it suitable for processing large diffs efficiently. It supports full .gitignore functionality including negations, VCS metadata filtering, and integration with downstream filter tools.
+
+.B diff-gitignore-filter
+can be integrated into Git workflows as a pager, used in manual pipelines, or configured through Git aliases for convenient access.
+
+.SH OPTIONS
+.TP
+.BR \-d ", " \-\-downstream " " \fICOMMAND\fR
+Pipe filtered output to the specified downstream command. The command will receive the filtered diff content through stdin.
+.TP
+.BR \-\-vcs
+Enable VCS ignore filtering (overrides Git configuration). This filters out VCS metadata directories like .git/, .svn/, etc.
+.TP
+.BR \-\-no\-vcs
+Disable VCS ignore filtering (overrides Git configuration). VCS metadata directories will not be filtered.
+.TP
+.BR \-\-vcs\-pattern " " \fIPATTERNS\fR
+Specify custom VCS patterns as comma-separated list. These patterns will be used instead of the default VCS patterns for filtering.
+.TP
+.BR \-h ", " \-\-help
+Display help information and exit.
+.TP
+.BR \-V ", " \-\-version
+Display version information and exit.
+
+.SH CONFIGURATION
+.B diff-gitignore-filter
+can be configured through Git's configuration system using the following keys:
+
+.TP
+.B gitignore-diff.downstream-filter
+Specifies the default downstream filter command. This command will be used when no explicit downstream option is provided.
+.TP
+.B diff-gitignore-filter.vcs-ignore.enabled
+Boolean value controlling whether VCS ignore filtering is enabled by default. Default: true.
+.TP
+.B diff-gitignore-filter.vcs-ignore.patterns
+Comma-separated list of VCS patterns to filter. Default: .git/,.svn/,_svn/,.hg/,CVS/,CVSROOT/,.bzr/
+
+Configuration can be set at global, local, or worktree level using standard Git configuration commands.
+
+.SH EXAMPLES
+.SS Git Pager Integration
+Configure diff-gitignore-filter as the default Git pager:
+.nf
+.RS
+git config --global core.pager "diff-gitignore-filter"
+git config --global gitignore-diff.downstream-filter "delta --side-by-side"
+.RE
+.fi
+
+.SS Manual Pipeline Usage
+Use diff-gitignore-filter in manual command pipelines:
+.nf
+.RS
+# Basic filtering
+git diff --no-pager | diff-gitignore-filter
+
+# With downstream filter
+git diff --no-pager | diff-gitignore-filter --downstream "delta --side-by-side"
+
+# Enable VCS filtering
+git diff --no-pager | diff-gitignore-filter --vcs
+
+# Custom VCS patterns
+git diff --no-pager | diff-gitignore-filter --vcs-pattern ".git/,.svn/"
+.RE
+.fi
+
+.SS Git Aliases
+Create convenient Git aliases for common usage patterns:
+.nf
+.RS
+# Filtered diff with syntax highlighting
+git config --global alias.idiff '!git diff --no-pager | diff-gitignore-filter --downstream "delta --side-by-side"'
+
+# Quick filtered diff
+git config --global alias.fdiff '!git diff --no-pager | diff-gitignore-filter'
+
+# VCS-filtered diff
+git config --global alias.vdiff '!git diff --no-pager | diff-gitignore-filter --vcs'
+.RE
+.fi
+
+.SS Configuration Examples
+Set up various configuration options:
+.nf
+.RS
+# Set default downstream filter
+git config --global gitignore-diff.downstream-filter "bat --language diff"
+
+# Disable VCS filtering by default
+git config --local diff-gitignore-filter.vcs-ignore.enabled false
+
+# Custom VCS patterns
+git config --global diff-gitignore-filter.vcs-ignore.patterns ".git/,.hg/,node_modules/"
+.RE
+.fi
+
+.SH FILES
+.TP
+.B .gitignore
+Standard Git ignore file. The tool respects .gitignore file in the repository  root.
+
+.SH EXIT STATUS
+.B diff-gitignore-filter
+exits with the following status codes:
+
+.TP
+.B 0
+Successful completion.
+.TP
+.B 1
+General error (invalid arguments, configuration errors, etc.).
+.TP
+.B 2
+I/O error (unable to read input, write output, or access files).
+.TP
+.B 3
+Git repository error (not in a Git repository, corrupted repository, etc.).
+
+.SH SEE ALSO
+.BR git (1),
+.BR git-diff (1),
+.BR git-config (1),
+.BR gitignore (5),
+.BR delta (1),
+.BR bat (1)
+
+Git documentation: https://git-scm.com/docs
+.br
+Project repository: https://github.com/trontheim/diff-gitignore-filter
+
+.SH BUGS
+Report bugs to the project's issue tracker at:
+.br
+https://github.com/trontheim/diff-gitignore-filter/issues
+
+Known limitations:
+.IP \(bu 2
+Binary file detection relies on Git's diff output format
+.IP \(bu 2
+Very large .gitignore files with complex patterns may impact performance
+.IP \(bu 2
+Symlink handling follows Git's behavior and may not match filesystem reality
+
+.SH AUTHOR
+Written by the diff-gitignore-filter development team.
+
+This manual page was generated for diff-gitignore-filter version 1.0.0.
+
+.SH COPYRIGHT
+Copyright \(co 2025 diff-gitignore-filter contributors.
+.br
+This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

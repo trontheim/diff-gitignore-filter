@@ -1,0 +1,79 @@
+---
+# .lefthook.yml
+min_version: 1.5.0
+
+pre-commit:
+  commands:
+    # Schnelle Kompilierbarkeits-Prüfung (WICHTIG: Erste Prüfung)
+    check:
+      run: cargo check --all-targets --all-features --quiet --locked --message-format short
+      glob: "*.rs"
+      fail_text: |
+        ❌ Code compilation check failed!
+        💡 Fix compilation errors before committing
+        🔧 Run: cargo check --all-targets --all-features
+
+    # Code-Formatierung prüfen
+    format:
+      run: cargo fmt -- --check
+      glob: "*.rs"
+      fail_text: |
+        ❌ Code formatting issues found!
+        💡 Run: cargo fmt
+
+    # Linting mit Clippy
+    clippy:
+      run: cargo clippy --all-targets --all-features --quiet --locked --message-format short -- -D warnings
+      glob: "*.rs"
+      fail_text: |
+        ❌ Clippy warnings found!
+        💡 Fix all warnings before committing
+
+    # Schnelle Tests (nur Library)
+    test-lib:
+      run: cargo test --lib --no-fail-fast --quiet --locked --message-format short
+      glob: "*.rs"
+      fail_text: |
+        ❌ Library tests failed!
+        💡 Fix failing tests before committing
+
+commit-msg:
+  commands:
+    cocogitto-verify:
+      run: cog verify --file {0}
+      fail_text: |
+        ❌ Commit message validation failed!
+        💡 Use: cog commit (interactive)
+        💡 Or: git config commit.template .gitmessage
+        🔗 Format: https://www.conventionalcommits.org/
+
+pre-push:
+  commands:
+    # Vollständige Kompilierung aller Targets
+    check-all:
+      run: cargo check --all-targets --all-features --release --quiet --locked --message-format short
+      fail_text: |
+        ❌ Release compilation check failed!
+        💡 Fix compilation issues before pushing
+
+    # Vollständige Tests
+    test-all:
+      run: cargo test --lib --bins --tests --all-features --release --quiet --locked --message-format short
+      fail_text: |
+        ❌ Full test suite failed!
+        💡 All tests must pass before pushing
+
+    # Benchmarks kompilieren
+    benchmarks:
+      run: cargo check --benches --all-features
+      fail_text: |
+        ❌ Benchmark compilation failed!
+        💡 Ensure benchmarks compile before pushing
+
+    # Strikte Clippy-Prüfung
+    clippy:
+      run: cargo clippy --all-targets --all-features --release --quiet --locked --message-format short -- -D warnings
+      fail_text: |
+        ❌ Clippy checks failed!
+        💡 Fix pedantic warnings before pushing
+

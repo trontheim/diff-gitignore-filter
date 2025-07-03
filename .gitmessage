@@ -1,0 +1,25 @@
+# <type>[optional scope]: <description>
+#
+# [optional body]
+#
+# [optional footer(s)]
+#
+# Types: feat, fix, docs, style, refactor, perf, test, chore, ci, build, revert
+# Additional: security, breaking
+#
+# Scopes: filter, root-finder, config, cli, error, bench, deps
+# Additional: integration, vcs, unicode, streaming, simd
+#
+# Examples:
+# feat(filter): add SIMD-optimized pattern matching
+# fix(root-finder): handle Git worktrees correctly
+# docs(readme): update installation instructions
+# security(config): validate user input to prevent path traversal
+# breaking(cli): remove deprecated --legacy-mode flag
+#
+# Breaking Changes:
+# breaking(api): remove deprecated filter methods
+# feat(cli)!: change default output format to JSON
+# BREAKING CHANGE: Configuration file format changed
+#
+# For more information: https://www.conventionalcommits.org/

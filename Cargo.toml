@@ -1,0 +1,70 @@
+[package]
+name = "diff-gitignore-filter"
+version = "0.1.0-dev"
+edition = "2021"
+rust-version = "1.82.0"
+authors = ["Valgard Trontheim <valgard@trontheim.com>"]
+description = "Pure stream-filter for Git diffs that respects .gitignore patterns"
+documentation = "https://github.com/trontheim/diff-gitignore-filter"
+homepage = "https://github.com/trontheim/diff-gitignore-filter"
+license = "MIT"
+repository = "https://github.com/trontheim/diff-gitignore-filter"
+keywords = ["git", "diff", "gitignore", "filter", "cli"]
+categories = ["command-line-utilities", "development-tools", "text-processing"]
+readme = "README.md"
+include = [
+    "src/**/*",
+    "benches/**/*",
+    "tests/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+]
+
+[package.metadata.release]
+allow-branch = ["main"]
+sign-commit = false
+sign-tag = false
+push = true
+shared-version = true
+consolidate-commits = false
+pre-release-hook = ["./scripts/pre-release.sh", "{{version}}"]
+publish = false
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+ignore = "0.4"
+memchr = "2.7"
+anyhow = "1.0"
+thiserror = "2.0"
+tempfile = "3.20"
+relative-path = "2.0"
+gix = "0.72"
+
+[dev-dependencies]
+assert_cmd = "2.0"
+predicates = "3.1"
+criterion = "0.6"
+proptest = "1.7"
+quickcheck = "1.0"
+quickcheck_macros = "1.1"
+
+[[bench]]
+name = "performance"
+harness = false
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+opt-level = "z"
+strip = "symbols"
+debug = false
+overflow-checks = false
+
+[profile.bench]
+lto = true
+codegen-units = 1
+opt-level = 3
+debug = false

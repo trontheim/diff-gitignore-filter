@@ -1,0 +1,95 @@
+# Codecov Configuration for diff-gitignore-filter
+# This configuration defines coverage targets, ignore patterns, and reporting settings
+
+coverage:
+  # Global coverage targets
+  status:
+    project:
+      default:
+        target: 85%
+        threshold: 1%
+        base: auto
+        flags:
+          - unit
+          - integration
+        if_ci_failed: error
+    patch:
+      default:
+        target: 90%
+        threshold: 1%
+        base: auto
+        flags:
+          - unit
+          - integration
+        if_ci_failed: error
+
+  # Precision for coverage percentages
+  precision: 2
+
+  # Round coverage to nearest integer
+  round: down
+
+  # Coverage range (red to green)
+  range: "70...100"
+
+# Files and directories to ignore for coverage
+ignore:
+  - "benches/"
+  - "tests/fixtures/"
+  - "examples/"
+  - "target/"
+  - "docs/"
+  - "*.md"
+  - "LICENSE"
+  - ".gitignore"
+  - ".codecov.yml"
+  - "Cargo.toml"
+  - "Cargo.lock"
+
+# Comment configuration for pull requests
+comment:
+  layout: "reach,diff,flags,tree,reach"
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+  branches:
+    - main
+    - master
+
+# GitHub integration settings
+github_checks:
+  annotations: true
+
+# Flag management with carryforward
+flag_management:
+  default_rules:
+    carryforward: true
+    carryforward_mode: "all"
+  individual_flags:
+    - name: unit
+      carryforward: true
+      carryforward_mode: "all"
+    - name: integration
+      carryforward: true
+      carryforward_mode: "all"
+
+# Codecov notification settings
+codecov:
+  notify:
+    after_n_builds: 1
+    wait_for_ci: true
+
+# Parsing configuration
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+# Profiling settings
+profiling:
+  critical_files_paths:
+    - "src/"

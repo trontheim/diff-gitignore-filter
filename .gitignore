@@ -1,0 +1,269 @@
+# =============================================================================
+# Rust/Cargo Build Artifacts
+# =============================================================================
+
+# Cargo build artifacts
+/dist/
+/target/
+**/target/
+
+# Cargo.lock should be committed for binaries but not for libraries
+# Since this appears to be a binary project, we keep Cargo.lock
+# Cargo.lock
+
+# Cargo configuration files that might contain sensitive information
+.cargo/config.toml
+.cargo/credentials.toml
+
+# Rust compilation artifacts
+*.rlib
+*.rmeta
+*.so
+*.dylib
+*.dll
+*.exe
+*.pdb
+
+# Rust incremental compilation
+**/*.rs.bk
+
+# =============================================================================
+# IDE/Editor Specific Files
+# =============================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# IntelliJ IDEA / CLion / RustRover
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim/Neovim
+*.swp
+*.swo
+*~
+.netrwhist
+Session.vim
+Sessionx.vim
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+
+# =============================================================================
+# OS Specific Files
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# Development Tools & Testing
+# =============================================================================
+
+# Criterion benchmark results
+/criterion/
+/target/criterion/
+
+# Code coverage reports
+/target/coverage/
+target/coverage/
+/target/tarpaulin-report.html
+lcov.info
+coverage.json
+*.profraw
+*.profdata
+
+# Flamegraph output
+flamegraph.svg
+perf.data*
+
+# Valgrind output
+vgcore.*
+*.valgrind
+
+# =============================================================================
+# Project Specific Exclusions
+# =============================================================================
+
+# Test fixtures that might be generated
+/tests/temp/
+/tests/output/
+
+# Documentation build artifacts
+/target/doc/
+/docs/book/
+
+# Local configuration files
+.env
+.env.local
+.env.*.local
+
+# Log files
+*.log
+logs/
+
+# =============================================================================
+# Backup Files
+# =============================================================================
+
+# General backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*.tmp
+
+# Editor backup files
+*~
+*.swp
+*.swo
+\#*\#
+.#*
+
+# Patch files
+*.patch
+*.diff.orig
+*.rej
+
+# =============================================================================
+# Security & Secrets
+# =============================================================================
+
+# Environment files with secrets
+.env.production
+.env.staging
+secrets.toml
+config/secrets.toml
+
+# SSH keys
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*.pem
+*.key
+
+# GPG keys
+*.gpg
+*.asc
+
+# =============================================================================
+# Temporary & Cache Files
+# =============================================================================
+
+# Temporary directories
+tmp/
+temp/
+cache/
+
+# Node.js (if using for tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if using for tooling)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =============================================================================
+# Build System Artifacts
+# =============================================================================
+
+# Make artifacts
+*.o
+*.a
+*.la
+*.lo
+*.so.*
+
+# CMake artifacts (if using cmake for C bindings)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Autotools artifacts
+.deps/
+.libs/
+*.la
+*.lo
+config.log
+config.status
+configure
+Makefile.in
+aclocal.m4
+autom4te.cache/
+
+# =============================================================================
+# Local Development & Testing Tools
+# =============================================================================
+
+# act (GitHub Actions local testing) secrets
+.secrets

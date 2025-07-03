@@ -1,0 +1,8 @@
+# Basic act configuration for diff-ignore-filter
+-P ubuntu-latest=catthehacker/ubuntu:full-22.04
+-P ubuntu-22.04=catthehacker/ubuntu:full-22.04
+-P macos-latest=catthehacker/ubuntu:full-22.04
+-P windows-latest=catthehacker/ubuntu:full-22.04
+--container-daemon-socket -
+--container-architecture linux/amd64
+--secret-file .secrets

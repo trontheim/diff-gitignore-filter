@@ -1,0 +1,31 @@
+diff --git a/src/main.rs b/src/main.rs
+index 1234567..abcdefg 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -1,3 +1,4 @@
+ fn main() {
++    println!("Hello, world!");
+ }
+diff --git a/debug.log b/debug.log
+index 1111111..2222222 100644
+--- a/debug.log
++++ b/debug.log
+@@ -1 +1,2 @@
+ log entry
++another log entry
+diff --git a/target/debug/main b/target/debug/main
+index 3333333..4444444 100644
+--- a/target/debug/main
++++ b/target/debug/main
+@@ -1 +1,2 @@
+ binary content
++more binary content
+diff --git a/README.md b/README.md
+index 5555555..6666666 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,4 @@
+ # Project Title
+ 
+ This is a sample project.
++Added documentation.
